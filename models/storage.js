@@ -17,14 +17,14 @@
 * ==============================================================================
 */
 
-let request = require('request')
+
 let config = require('../config')
 let rp = require('request-promise')
 
 
 exports.saveDocumentPromise = function (body) {
   return new Promise(function (resolve, reject) {
-    request.post(config.couchdb, { json: body },
+    rp.post(config.couchdb, { json: body },
       function (error, response, body) {
       if (error) {
         return reject(body)
@@ -37,7 +37,7 @@ exports.saveDocumentPromise = function (body) {
 // Get a document entry by id
 exports.getDocumentPromise = function (_id) {
   return new Promise(function (resolve, reject) {
-    request.get(config.couchdb + '/' + _id, function (error, response, body) {
+    rp.get(config.couchdb + '/' + _id, function (error, response, body) {
       if (error) {return reject(error)}
       resolve(JSON.parse(body))
     })
@@ -46,7 +46,7 @@ exports.getDocumentPromise = function (_id) {
 
 exports.getSellerPromise = function (sellerId) {
   return new Promise(function (resolve, reject) {
-    request.get(config.couchdb + '/' + sellerId,
+    rp.get(config.couchdb + '/' + sellerId,
       function (error, response, body) {
       if (error) {
         return reject(error)
@@ -59,7 +59,7 @@ exports.getSellerPromise = function (sellerId) {
 
 exports.saveAddressPromise = function (body) {
   return new Promise(function (resolve, reject) {
-    request.post(config.couchdb, { json: body },
+    rp.post(config.couchdb, { json: body },
       function (error, response, body) {
       if (error) {
         return reject(body)
@@ -71,7 +71,7 @@ exports.saveAddressPromise = function (body) {
 
 exports.savePayoutPromise = function (body) {
   return new Promise(function (resolve, reject) {
-    request.post(config.couchdb, { json: body },
+    rp.post(config.couchdb, { json: body },
       function (error, response, body) {
       if (error) {
         return reject(body)
@@ -84,7 +84,7 @@ exports.savePayoutPromise = function (body) {
 
 exports.saveSellerPromise = function (sellerId, data) {
   return new Promise(function (resolve, reject) {
-    request.post(config.couchdb, { json: data },
+    rp.post(config.couchdb, { json: data },
       function (error, response, body) {
       if (error) {
         return reject(body)

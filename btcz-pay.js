@@ -24,7 +24,7 @@
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0'
 let express = require('express')
 let morgan = require('morgan')
-let uuid = require('node-uuid')
+let uuid = require('uuid')
 let bodyParser = require('body-parser')
 let rp = require('request-promise')
 
@@ -131,12 +131,6 @@ CurArray.forEach(function(value){
   setInterval(() => updateExchangeRate(value),
                       config.marketrate_refresh * 60 * 1000)
 })
-
-
-
-
-
-
 
 
 

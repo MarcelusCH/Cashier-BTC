@@ -50,7 +50,7 @@ router.get('/generate_qr/:text', function (req, res) {
   })
 })
 
-
+// Get the main page
 router.get('/', function (req, res) {
   return res.render(path.join(__dirname + '/../docs/index.html'),
     { GoogleAnalytics: config.GoogleAnalytics,
@@ -60,6 +60,7 @@ router.get('/', function (req, res) {
       confirmation_before_forward: config.confirmation_before_forward});
 })
 
+// Get FAQ Page
 router.get('/faq', function (req, res) {
   return res.render(path.join(__dirname + '/../docs/faq.html'),
     { GoogleAnalytics: config.GoogleAnalytics,
@@ -71,15 +72,17 @@ router.get('/faq', function (req, res) {
        GatewayLimit: config.max_gateway_client});
 })
 
+// Help 1
 router.get('/started', function (req, res) {
   return res.sendFile(path.join(__dirname + '/../docs/started.html'));
 })
 
+// Contacts me
 router.get('/contact', function (req, res) {
   return res.sendFile(path.join(__dirname + '/../docs/contact.html'));
 })
 
-
+// Get the invoice
 router.get('/invoice/:text', function (req, res) {
   let invoice_ID = req.params.text
   return res.render(path.join(__dirname + '/../docs/invoice.html'),
@@ -87,25 +90,14 @@ router.get('/invoice/:text', function (req, res) {
       InvoiceID: invoice_ID});
 })
 
-
-
-
 // POST route from contact form
 router.post('/contact', function (req, res) {
 
   let mailOpts, smtpTrans;
-  smtpTrans = nodemailer.createTransport({
-    host: 'smtp.gmail.com',
-    port: 465,
-    secure: true,
-    auth: {
-      user: config.gmail_user,
-      pass: config.gmail_pass
-    }
-  });
+  smtpTrans = nodemailer.createTransport(config.smtp);
   mailOpts = {
-    from: req.body.name + ' &lt;' + req.body.email + '&gt;',
-    to: config.gmail_user,
+    from: config.smtp.auth.user,
+    to: config.smtp.auth.user,
     subject: 'New message from contact form at pay.btcz.app',
     text: `${req.body.name} (${req.body.email}) says: ${req.body.message}`
   };
@@ -122,8 +114,7 @@ router.post('/contact', function (req, res) {
 
 });
 
-
-
+// Error return page code
 router.use(function (req, res) {
   res.status(404).send('404')
 })

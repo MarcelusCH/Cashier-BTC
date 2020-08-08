@@ -82,7 +82,7 @@ router.get('/api/request_payment/', function (req, res) {
 // -----------------------------------------------------------------------------
 router.get('/api/request_payment/:expect/:currency/:message/:seller/:customer/'
             +':ipnPingback/:cliSuccessURL/:cliErrorURL/:SpeedSweep/'
-            +':secret', function (req, res) {
+            +':secret/:time?', function (req, res) {
 
   // Set variables of request param
   let expect = req.params.expect                    // Expected amount
@@ -96,6 +96,12 @@ router.get('/api/request_payment/:expect/:currency/:message/:seller/:customer/'
   let SpeedSweep = req.params.SpeedSweep            // Speed Pay option
   let secret = req.params.secret                    // Secret phrase
   let exchangeRate, btcToAsk, satoshiToAsk
+
+  // Declare date now
+  var ts = Date.now();
+  if(req.params.time==1){
+	   ts = Date.parse(new Date(new Date(ts).getTime() + 60 * 60 * 24 * 1000*7));
+  }
 
   (async function () {
 
@@ -131,8 +137,6 @@ router.get('/api/request_payment/:expect/:currency/:message/:seller/:customer/'
                   +clientIp, 'Total open gateway: '+totOpenByIP, 'IP1: ' +clientIp_t1, 'IP2: ' +clientIp_t2, 'IP3: ' +clientIp_t3, 'IP4: ' +clientIp_t4])
     }
 
-
-
     // Get exchange rate
     switch (currency) {
       case 'AUD': exchangeRate = btczAud; break
@@ -157,7 +161,7 @@ router.get('/api/request_payment/:expect/:currency/:message/:seller/:customer/'
     // Generate payment address and set DB fields infos
     let PayAddress = signer.generateNewSegwitAddress()
     let addressData = {
-      'timestamp': Date.now(),
+      'timestamp': ts,
       'expect': expect,
       'currency': currency,
       'exchange_rate': exchangeRate,
@@ -378,7 +382,6 @@ router.get('/api/cancel/:_id', function (req, res) {
       'ip' : values[0].ip
     }
 
-
     // Check if not paid
     if (values[0].state==0 || values[0].state==1){
 
@@ -401,7 +404,6 @@ router.get('/api/cancel/:_id', function (req, res) {
         logger.error('/api/cancel/', [req.id, 'Pingback expired fail: ' , URLset, error.message, error.stack])
       })
     }
-
 
   }).catch((error) => {
     logger.error('/api/cancel/', [ req.id, error.message, error.stack ])
@@ -443,7 +445,6 @@ router.get('/api/accept/:_id', function (req, res) {
       'sweep_result' : values[0].sweep_result,
       'ip' : values[0].ip
     }
-
 
     // Change gateway state to 1
     if (values[0].state==0){

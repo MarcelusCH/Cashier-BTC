@@ -249,7 +249,7 @@
                       var tx_array = (jsonArray).split(":");
                       var tx_array = tx_array[4].toString();
                       var tx_array = tx_array.split(",");
-                      newInfo += '<br><b><a href="https://explorer.btcz.rocks/tx/' + ((tx_array[0]).replace('"',"")).replace('"',"") + '" target="_blank">' + ((tx_array[0]).replace('"',"")).replace('"',"") + '</a></b>';
+                      newInfo += '<br><b><a href="https://explorer.btcz.app/tx/' + ((tx_array[0]).replace('"',"")).replace('"',"") + '" target="_blank">' + ((tx_array[0]).replace('"',"")).replace('"',"") + '</a></b>';
                       $("#infoTop").html(newInfo);
 
                       window.top.postMessage(data.success_callback_url, '*');
@@ -380,15 +380,14 @@
         </script>
 
 
-
-        <script async src="https://www.googletagmanager.com/gtag/js?id=<%= GoogleAnalytics %>"></script>
+        <!-- <script async src="https://www.googletagmanager.com/gtag/js?id=<%= GoogleAnalytics %>"></script>
         <script>
           window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments);}
           gtag('js', new Date());
 
           gtag('config', '<%= GoogleAnalytics %>');
-        </script> 
+        </script> -->
 
 
 
@@ -513,7 +512,10 @@
             <br><br><br>
 
 
-            <div style="width: 100%; text-align: right; font-size: 14px;margin-top: 5px;margin-right: 20px; color: black;" id="TimeLeft"></div>
+            <div style="width: 100%; text-align: center; font-size: 16px; margin-top: 0px;margin-right: 20px; color: red;" id="textAtt">
+              <b>DO NOT</b> send funds from a Z address or an exchange ! Your funds will not be sent back automatically if an error occurred.
+            </div>
+            <div style="width: 100%; text-align: right; font-size: 14px; margin-top: 5px;margin-right: 20px; color: black;" id="TimeLeft"></div>
 
 
         </div>

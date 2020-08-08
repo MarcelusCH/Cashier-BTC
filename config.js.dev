@@ -7,6 +7,16 @@ module.exports = {
   'bitcoind': {
     'rpc': 'http://user:pass@127.0.0.1:1979'
   },
+  'smtp': {
+   host: 'smtp.server.com',
+   port: 587,
+   secure: false,
+   requireTLS: true,
+   auth: {
+     user: 'UserName',
+     pass: 'Password'
+   }
+ },
   'coinmarketcap_API': 'xxxxxx-xxxx-xxxx-xxxxxxxxxxxx', // The API key of the CoinMarketCap.com account
   'marketrate_refresh': 30, // in minutes
   'max_payment_valid' : 30, // in minute
@@ -19,8 +29,6 @@ module.exports = {
   'max_gateway_client' : 20, // Maximum of gateway (open) per client (0= no limit)
   'check_return' : 60, // time after gateway expired to check found return
   'GoogleAnalytics' : 'GoAnString', // Google Analytics ID
-  'gmail_user' : 'UserName', // Gmail user name
-  'gmail_pass' : 'PassWord', // Gmail password
   'process_unpaid_for_period': 24 * 3600 * 1000, // worker that checks status of addresses
   'process_paid_for_period': 30 * 24 * 3600 * 1000 // worker2 that sweeps temporary wallets
 }

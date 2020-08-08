@@ -83,8 +83,6 @@ async function processJob (rows) {
 
 
 
-
-
               // Get the VIN TXID and decode the hex
               let RawTransactionVin = await blockchain.getRawTransaction(decodeRaw.result.vin[0].txid)
               let decodeRawTransactionVin = await blockchain.decodeRawTransaction(RawTransactionVin.result)
@@ -130,7 +128,6 @@ async function processJob (rows) {
 
 
             }
-
 
           } // end if/else transactions.result[0] == undefined
 
